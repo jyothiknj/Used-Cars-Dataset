@@ -1845,13 +1845,10 @@ Above shows that for alpha value of 10000, the mean squared error on the develop
 
 ### Evaluation
 
-With some modeling accomplished, we aim to reflect on what we identify as a high quality model and what we are able to learn from this.  We should review our business objective and explore how well we can provide meaningful insight on drivers of used car prices.  Your goal now is to distill your findings and determine whether the earlier phases need revisitation and adjustment or if you have information of value to bring back to your client.
-
-### MY POINTS
 
 After executing different Linear and Ridge regression models on our Cars dataset, and calculating mean squared errors on Training and Development sets, tabulated the below table to help compare and identify the models that are best fit for our cars dataset.
 
-![image-4.png](attachment:image-4.png)
+![image](https://github.com/jyothiknj/Used-Cars-Dataset/assets/35855780/dedaa896-68e8-41e1-8423-02267a6eb50d)
 
 This table clearly shows the Linear Regression has the lowest mean squared error on the development set when we use SequentialFeature selector and selected 5 features. These 5 features are Car type - Bus, offroad and Car Condition - Fair/New/Salvage
 
@@ -1878,11 +1875,7 @@ Now that we've settled on our models and findings, it is time to deliver the inf
 
 From the Linear Regression model performed after selecting the best 5 features that influence the pricing of the used car, the below plot is drawn. This clearly shows that these 5 features have a strong negative weight. Which means the presence of these features in the car will make the car less expensive. So, customers also will avoid buying the cars with these features.
 
-![image.png](attachment:image.png)
-
-
-
-
+![image](https://github.com/jyothiknj/Used-Cars-Dataset/assets/35855780/8779ec22-e919-42df-a1e5-5e47a441088b)
 
 
 When we want to look at all the features and not just few, Ridge Regularization model helps. Below is the plot that shows the Coefficients plotted against the Features that clearly shows how each feature positively or negatively impacts the price.
@@ -1893,7 +1886,8 @@ People prefer to buy Electric or Diesel fuel cars in Excellent condition and are
 Mostly customers prefer hatch back or pickup vehicles with a forward wheel drive and an automatic transmission. 
 They look for a higher power engine which has more cylinders and also drove certain miles along with title status Clean. They are also ok if the title is missing. 
 
-![image-2.png](attachment:image-2.png)
+![image](https://github.com/jyothiknj/Used-Cars-Dataset/assets/35855780/030f1ffc-6071-447b-9e5a-eeb0f62e82fb)
+
 
 
 
