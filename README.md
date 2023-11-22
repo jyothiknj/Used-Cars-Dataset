@@ -41,31 +41,6 @@ This information should help the car dealer to understand what features the cons
 - Imported the different libraries in Python to get started with the exploratory data analysis
 
 
-
-```python
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-import plotly.express as px
-from sklearn.preprocessing import OneHotEncoder
-import random
-from sklearn.compose import make_column_transformer, make_column_selector
-from sklearn.pipeline import Pipeline,FeatureUnion
-from sklearn.preprocessing import StandardScaler, PolynomialFeatures
-from sklearn.base import BaseEstimator, TransformerMixin
-from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.metrics import mean_squared_error
-from sklearn.linear_model import LinearRegression, Ridge
-from sklearn.feature_selection import SequentialFeatureSelector
-```
-
-
-```python
-cars = pd.read_csv("C:/Users/jpatchigolla/Downloads/practical_application_II_starter/data/vehicles.csv")
-```
-
-
 ```python
 cars.info()
 ```
@@ -98,46 +73,6 @@ cars.info()
     
 
 
-```python
-cars.isnull().sum()
-```
-
-
-
-
-    id                   0
-    region               0
-    price                0
-    year              1205
-    manufacturer     17646
-    model             5277
-    condition       174104
-    cylinders       177678
-    fuel              3013
-    odometer          4400
-    title_status      8242
-    transmission      2556
-    VIN             161042
-    drive           130567
-    size            306361
-    type             92858
-    paint_color     130203
-    state                0
-    dtype: int64
-
-
-
-
-```python
-cars.shape
-```
-
-
-
-
-    (426880, 18)
-
-
 
 #### Exploratory Data Analysis
 1. Looked at the datapoints in the dataset
@@ -168,16 +103,6 @@ cars_data.drop(columns = ['id', 'region', 'paint_color', 'model', 'size', 'manuf
 cars_data.shape
 ```
 
-    C:\Users\jpatchigolla\AppData\Local\Temp\ipykernel_24172\1370601929.py:1: SettingWithCopyWarning: 
-    A value is trying to be set on a copy of a slice from a DataFrame
-    
-    See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-      cars_data.drop(columns = ['id', 'region', 'paint_color', 'model', 'size', 'manufacturer','state'], inplace= True)
-    
-
-
-
-
     (420393, 11)
 
 
@@ -196,22 +121,6 @@ cars_data['VIN']=pd.to_numeric(cars_data['VIN'])
 cars_data['VIN'].value_counts()
 ```
 
-    C:\Users\jpatchigolla\AppData\Local\Temp\ipykernel_24172\833551647.py:1: SettingWithCopyWarning: 
-    A value is trying to be set on a copy of a slice from a DataFrame
-    
-    See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-      cars_data['VIN'].fillna(0, inplace=True)
-    C:\Users\jpatchigolla\AppData\Local\Temp\ipykernel_24172\833551647.py:3: SettingWithCopyWarning: 
-    A value is trying to be set on a copy of a slice from a DataFrame.
-    Try using .loc[row_indexer,col_indexer] = value instead
-    
-    See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-      cars_data['VIN']=pd.to_numeric(cars_data['VIN'])
-    
-
-
-
-
     1    264036
     0    156357
     Name: VIN, dtype: int64
@@ -228,16 +137,6 @@ Removed the string value " cylinders" in cylinders column values. Converted the 
 cars_data['cylinders'] = cars_data.query("cylinders != ''")['cylinders'].str.replace(' cylinders', '')
 cars_data['cylinders'].value_counts()
 ```
-
-    C:\Users\jpatchigolla\AppData\Local\Temp\ipykernel_24172\518503889.py:1: SettingWithCopyWarning: 
-    A value is trying to be set on a copy of a slice from a DataFrame.
-    Try using .loc[row_indexer,col_indexer] = value instead
-    
-    See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-      cars_data['cylinders'] = cars_data.query("cylinders != ''")['cylinders'].str.replace(' cylinders', '')
-    
-
-
 
 
     6        93069
@@ -260,13 +159,6 @@ cars_data['cylinders'].value_counts()
 cars_data['cylinders']=cars_data['cylinders'].astype(int)
 ```
 
-    C:\Users\jpatchigolla\AppData\Local\Temp\ipykernel_24172\3018718834.py:4: SettingWithCopyWarning: 
-    A value is trying to be set on a copy of a slice from a DataFrame.
-    Try using .loc[row_indexer,col_indexer] = value instead
-    
-    See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-      cars_data['cylinders']=cars_data['cylinders'].astype(int)
-    
 
 #### Drive 
 
@@ -279,23 +171,15 @@ cars_data['drive'].value_counts()
 
 ```
 
-
-
-
     fwd    236320
     rwd     56023
     Name: drive, dtype: int64
-
-
 
 
 ```python
 cars_data.loc[cars_data["drive"].isnull(), "drive"] = np.random.choice(['fwd','rwd'], cars_data['drive'].isna().sum())
 cars_data['drive'].value_counts()
 ```
-
-
-
 
     fwd    300358
     rwd    120035
@@ -321,50 +205,12 @@ cars_data.loc[cars_data['title_status'].isna(),'title_status']= np.random.choice
 cars_data.dropna(subset=['condition','type'], inplace=True)
 ```
 
-    C:\Users\jpatchigolla\AppData\Local\Temp\ipykernel_24172\794161282.py:1: SettingWithCopyWarning: 
-    A value is trying to be set on a copy of a slice from a DataFrame
-    
-    See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-      cars_data.dropna(subset=['condition','type'], inplace=True)
-    
-
 
 ```python
 cars_data.shape
 ```
 
-
-
-
     (217393, 11)
-
-
-
-
-```python
-cars_data.info()
-```
-
-    <class 'pandas.core.frame.DataFrame'>
-    Int64Index: 217393 entries, 27 to 426879
-    Data columns (total 11 columns):
-     #   Column        Non-Null Count   Dtype  
-    ---  ------        --------------   -----  
-     0   price         217393 non-null  int64  
-     1   year          217393 non-null  float64
-     2   condition     217393 non-null  object 
-     3   cylinders     217393 non-null  int32  
-     4   fuel          217393 non-null  object 
-     5   odometer      217393 non-null  float64
-     6   title_status  217393 non-null  object 
-     7   transmission  217393 non-null  object 
-     8   VIN           217393 non-null  int64  
-     9   drive         217393 non-null  object 
-     10  type          217393 non-null  object 
-    dtypes: float64(2), int32(1), int64(2), object(6)
-    memory usage: 19.1+ MB
-    
-
 
 
 #### Transform the Data
@@ -1869,34 +1715,6 @@ cars_data_dummies.corr()
 
 
 #### Created a pipeline with FeatureUnion function to create PolynomialFeatures for numeric columns and concatenate them with the dummies columns data.
-
-
-```python
-
-class ColumnExtractor(BaseEstimator, TransformerMixin):
-    def __init__(self, columns=None):
-        self.columns = columns
-    def fit(self, X, y=None):
-        return self
-    def transform(self, X):
-        X_cols = X[self.columns]
-        return X_cols
-
-# Using pandas get dummies to make pipeline a bit simpler by
-# avoiding one-hot and label encoder.     
-# Build the pipeline from a FeatureUnion that processes 
-# numerical and one-hot encoded separately.
-# FeatureUnion puts them back together when it's done.
-pipe2nvars = Pipeline([
-    ('features', FeatureUnion([('num', Pipeline([('extract', ColumnExtractor(columns=['year','cylinders','odometer','VIN'])),
-                                          ('poly', PolynomialFeatures()),
-                                          ])),
-                               ('cat_var', ColumnExtractor(columns= dummies.columns.values.tolist()))])
-    )])    
-
-pipe2nvars
-```
-
 
 
 
