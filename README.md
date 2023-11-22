@@ -46,7 +46,6 @@ This information should help the car dealer to understand what features the cons
 cars = pd.read_csv("C:/Users/jpatchigolla/Downloads/practical_application_II_starter/data/vehicles.csv")
 ```
 
-
 ```python
 cars.info()
 ```
@@ -84,28 +83,13 @@ cars.info()
 3. Dropped the column Id as it doesn't influence price in any way.
 4. Dropped the columns manufacturer, region and state as irrespective of these, our goal is to determine what customers would value in a used car. 
 5. Dropped the Size column as 75% of the data in the column is missing.
-6. Dropping model as there is a type column
+6. Dropped model as there is a type column
 
-    
-
-
-```python
+ ```python
 cars_data.drop(columns = ['id', 'region', 'paint_color', 'model', 'size', 'manufacturer','state'], inplace= True)
 cars_data.shape
 ```
-
-    C:\Users\jpatchigolla\AppData\Local\Temp\ipykernel_19072\1370601929.py:1: SettingWithCopyWarning: 
-    A value is trying to be set on a copy of a slice from a DataFrame
-    
-    See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-      cars_data.drop(columns = ['id', 'region', 'paint_color', 'model', 'size', 'manufacturer','state'], inplace= True)
-    
-
-
-
-
     (420393, 11)
-
 
 
  ### Data Cleansing
@@ -114,33 +98,25 @@ cars_data.shape
 
 Presence/absence of VIN is what is required to appraise the car correctly. Hence converted the VIN into a numeric column by assigning 1 for all the rows where VIN is present and assigned 0 where VIN is missing. Converted the column into integer column using pd.to_numeric() funciton.
 
-![image.png](attachment:image.png)
+![image](https://github.com/jyothiknj/Used-Cars-Dataset/assets/35855780/04757e8c-5c0a-4c28-92b4-4ebd01abf344)
 
 
 #### Cylinders
 
 Removed the string value " cylinders" in cylinders column values. Converted the data into integers. Calculated the mean value of the column and it's 6. So, assigned 6 to the missing and 'other' cylinder data. Converted this column also into numeric
 
-![image-2.png](attachment:image-2.png)
+![image](https://github.com/jyothiknj/Used-Cars-Dataset/assets/35855780/7f99a29b-e39e-42ca-9c59-d407ea8de8a0)
 
 
 #### Drive 
 
 "drive" column has values for forward drive differently spelled. Some have 'fwd' and some have '4wd'. Replaced '4wd' with 'fwd'. For all the missing values, randomly assigned one of the 'fwd' or 'rwd'.
 
-![image.png](attachment:image.png)
+![image](https://github.com/jyothiknj/Used-Cars-Dataset/assets/35855780/2a529acc-9813-45c7-a116-851b726c304f)
+
 
 #### Missing values in "odometer" column are assigned the mean value of the data in that column.
 #### Missing values in "transmission", "fuel" and "title_status" columns are assinged randomly one of the categorical values they have
-
-
-```python
-cars_data.loc[cars_data["odometer"].isnull(), "odometer"] = cars_data['odometer'].mean()
-cars_data.loc[cars_data['transmission'].isna(),'transmission']= np.random.choice(['automatic','manual','other'], cars_data['transmission'].isna().sum())
-cars_data.loc[cars_data['fuel'].isna(),'fuel']= np.random.choice(['gas','diesel','other','hybrid','electric'], cars_data['fuel'].isna().sum())
-cars_data.loc[cars_data['title_status'].isna(),'title_status']= np.random.choice(['clean','rebuilt','salvage','lien','missing','parts only'], cars_data['title_status'].isna().sum())
-```
-
 #### Dropped the rows having missing values in 'condition' and 'type' columns
 
 Now the shape of the dataset is (217393, 11)
@@ -152,14 +128,6 @@ Now the shape of the dataset is (217393, 11)
 
 
 Converted all the categorical columns into numeric columns by getting dummies using pd.get_dummies() function and concating the resulting columns with the main dataframe
-
-
-```python
-cars_data_dummies = pd.concat([cars_data,dummies], axis=1).drop(columns = ['title_status', 'transmission','drive', 'type', 'condition', 'fuel'])
-cars_data_dummies.head(10)
-```
-
-
 
 
 <div>
@@ -1472,7 +1440,8 @@ cars_data_dummies.corr()
 
 #### Created a pipeline with FeatureUnion function to create PolynomialFeatures for numeric columns and concatenate them with the dummies columns data.
 
-![image.png](attachment:image.png)
+![image](https://github.com/jyothiknj/Used-Cars-Dataset/assets/35855780/a29bf07f-fa56-4443-97f3-8ef751062d37)
+
 
 ### MODELING
 
@@ -1482,8 +1451,7 @@ Unsupervised Learning
 - Linear Regression 
         - All the features
         - Sequential Feature Selection
- - Ridge Reularization (Grid search for hyper parameter)
-        
+ - Ridge Reularization (Grid search for hyper parameter)  
 
 Before applying a model, split the dataset into train and development(test) datasets.
 
@@ -1493,15 +1461,7 @@ Plotted the coefficients against the hyperparameter values and observer which fe
 
 #### Linear Regression on dataset with Polynomial Features for degrees 1,2,3,4
 
-![image.png](attachment:image.png)
-
-
-```python
-best_degree = error_df.sort_values("Test_MSE").iloc[0,:]
-best_degree
-```
-
-
+![image](https://github.com/jyothiknj/Used-Cars-Dataset/assets/35855780/e4ba4840-0075-471b-a0c5-3181a8909e33)
 
 
     Degree       4.000000e+00
@@ -1517,62 +1477,24 @@ So, now set to explore the dataset by selecting 5 or 7 features using Sequientia
 
 #### Linear Regression with Sequential Feature selection (# 5)
 
-![image.png](attachment:image.png)
+![image](https://github.com/jyothiknj/Used-Cars-Dataset/assets/35855780/f137c721-6d10-4480-982d-54388d8492a5)
 
-![image-2.png](attachment:image-2.png)
 
 #### Linear Regression with Sequential Feature selection (# 7)
 
-![image.png](attachment:image.png)
+![image](https://github.com/jyothiknj/Used-Cars-Dataset/assets/35855780/a760621e-4df6-4a4e-aae1-e40aa1f31b5e)
 
-![image-2.png](attachment:image-2.png)
 
 #### As we know using Sequential Feature selection allows us to predict the price, but we will not be able to derive inferences as our model is applied on very limited features.
 #### So, Now applied the Ridge Regularization model on the entire dataset and calculated mean_squared_error for various values of alpha hyperparameter
 
-![image.png](attachment:image.png)
+![image](https://github.com/jyothiknj/Used-Cars-Dataset/assets/35855780/5eebac4f-be63-4d14-a6ba-c2c9838153f0)
+
 
 #### Plotted the alpha values with corresponding Train MSE and Test MSEs
-
-
-
-
-```python
-
-```
-
-    No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
-    
-
-
-
-
-    <matplotlib.legend.Legend at 0x271efee3b10>
-
-
-
-
     
 ![png](output_31_2.png)
     
-
-
-
-```python
-
-```
-
-    No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
-    
-
-
-
-
-    <matplotlib.legend.Legend at 0x271eff1a410>
-
-
-
-
     
 ![png](output_32_2.png)
     
@@ -1583,29 +1505,12 @@ Above shows that for alpha value of 10000, the mean squared error on the develop
 #### Now used the GridSearchCV to determine the best alpha value for the dataset
 
 
-```python
-
-
-```
-
     Best Model  Pipeline(steps=[('scaler', StandardScaler()), ('ridge', Ridge(alpha=10000.0))])
-    
-
-
-```python
-
-```
-
     Ridge Train MSE:  104776688144975.28
     Ridge Test MSE:  236839115163.52
     
     Feature Coefficients for the best model
     
-    
-
-
-
-
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -1832,12 +1737,6 @@ Above shows that for alpha value of 10000, the mean squared error on the develop
 
 #### Plotted the coefficients for the different features
 
-
-```python
-
-```
-
-
     
 ![png](output_38_0.png)
     
@@ -1858,7 +1757,8 @@ So, overall, the model sees that Car Type, Condition, Title Status and Fuel (Ele
 
 Also, the Ridge Regression with alpha = 10000 has the lowest mean squared error on the development set predictions.
 
-Next Steps: We were able to explore, analyze and apply model only on subset of features. Dataset has many missing values.
+### Recommendations and Next Steps:
+We were able to explore, analyze and apply model only on subset of features. Dataset has many missing values.
 Less than 10% of the given data has all the information. Data is missing for one feature or the other in 90% of the data set.
 Especially some important columns. One of them is Size. The size can be a very big factor in determining the price of the car. But as 75% of datapoints has Size data missing, we had to drop that column. 
 
@@ -1888,9 +1788,3 @@ They look for a higher power engine which has more cylinders and also drove cert
 
 ![image](https://github.com/jyothiknj/Used-Cars-Dataset/assets/35855780/030f1ffc-6071-447b-9e5a-eeb0f62e82fb)
 
-
-
-
-```python
-
-```
